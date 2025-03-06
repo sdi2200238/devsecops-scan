@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - main
-
+      
 jobs:
   security-scan:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
       - name: Docker Scout
         uses: docker/scout-action@v1
         with:
-          command: cves,recommendations,compare,sbom
+          command: cves,sbom
           image: ethan42/ncompress:vulnerable
           exit-code: false 
           sarif-file: sca_scout.sarif
