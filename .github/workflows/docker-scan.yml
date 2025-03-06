@@ -38,6 +38,7 @@ jobs:
           image: ethan42/ncompress:vulnerable
           exit-code: false 
           sarif-file: sca_scout.sarif
+          max-related-locations: 1000
           output: sbom_scout.spdx.json
           format: spdx
           
