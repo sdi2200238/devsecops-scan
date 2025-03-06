@@ -24,15 +24,23 @@ jobs:
           sh install-scout.sh
           docker scout --help
 
-      - name: Run Docker Scout Scan
-        run: |
-            docker scout cves ethan42/ncompress:vulnerable --output json > scan_results.json
+      - name: Docker Scout
+        uses: docker/scout-action@v1
+        with:
+          command: cves,recommendations,compare,sbom
+          image: ethan42/ncompress:vulnerable
+          exit-code: false 
+          sarif-file: sca_scout.sarif
+          format: spdx
 
-      - name: Display Scan Results
-        run: cat scan_results.json
-
-      - name: Upload Scan Report
+      - name: Upload SARIF file as an artifact
         uses: actions/upload-artifact@v4
         with:
-          name: scan-results
-          path: scan_results.json
+          name: sca_scout.sarif
+          path: sca_scout.sarif
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: sca_scout.sarif
+          category: Security/SCA
