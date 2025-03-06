@@ -20,11 +20,14 @@ jobs:
 
       - name: Install Docker Scout
         run: |
-          curl -fsSL https://get.docker.com | sh
+          docker extension install docker/scout:latest
+          docker scout quickview install
           docker scout --help
 
       - name: Run Docker Scout Scan
-        run: docker scout quickview ethan42/ncompress:vulnerable > scan_results.txt
+        run: |
+          docker scout quickview ethan42/ncompress:vulnerable > scan_results.txt
+          cat scan_results.txt
 
       - name: Upload Scan Report
         uses: actions/upload-artifact@v4
