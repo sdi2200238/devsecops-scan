@@ -11,6 +11,10 @@ on:
 jobs:
   security-scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      security-events: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
