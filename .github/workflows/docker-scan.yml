@@ -26,7 +26,8 @@ jobs:
 
       - name: Run Docker Scout Scan
         run: |
-          docker scout quickview ethan42/ncompress:vulnerable > scan_results.txt
+          docker scout cves ethan42/ncompress:vulnerable > scan_results.txt
+
           cat scan_results.txt
 
       - name: Upload Scan Report
