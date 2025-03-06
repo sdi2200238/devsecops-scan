@@ -1,0 +1,33 @@
+name: Docker Scout Security Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+
+      - name: Install Docker Scout
+        run: |
+          curl -fsSL https://get.docker.com | sh
+          docker scout --help
+
+      - name: Run Docker Scout Scan
+        run: docker scout quickview ethan42/ncompress:vulnerable > scan_results.txt
+
+      - name: Upload Scan Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: scan-results
+          path: scan_results.txt
