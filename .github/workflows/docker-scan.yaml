@@ -1,6 +1,11 @@
 name: Docker Scout Security Scan
 
 on:
+  workflow_dispatch:
+    inputs:
+      image_name: 
+        description: 'grafana/grafana-image-renderer:master-9e1292b'
+        required: true
   push:
     branches:
       - main
@@ -29,13 +34,13 @@ jobs:
           docker scout --help
 
       - name: Pull Docker Image
-        run: docker pull grafana/grafana-image-renderer:master-9e1292b
+        run: docker pull ${{ github.event.inputs.image_name }}
 
       - name: Docker Scout
         uses: docker/scout-action@v1
         with:
           command: cves,recommendations,compare,sbom
-          image: grafana/grafana-image-renderer:master-9e1292b
+          image: ${{ github.event.inputs.image_name }}
           exit-code: false 
           sarif-file: sca_scout.sarif
           output: sbom_scout.spdx.json
