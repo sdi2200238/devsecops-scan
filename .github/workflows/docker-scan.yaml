@@ -35,7 +35,7 @@ jobs:
         uses: docker/scout-action@v1
         with:
           command: cves,sbom
-          image: appsecco/dvna:sqlite
+          image: grafana/grafana-image-renderer
           exit-code: false 
           sarif-file: sca_scout.sarif
           output: sbom_scout.spdx.json
