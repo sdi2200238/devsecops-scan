@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       image_name: 
-        description: 'grafana/grafana-image-renderer:master-9e1292b'
+        description: 'Docker image name'
         required: true
+        default: 'grafana/grafana-image-renderer:master-9e1292b'
   push:
     branches:
       - main
