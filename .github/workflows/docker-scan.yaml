@@ -29,13 +29,13 @@ jobs:
           docker scout --help
 
       - name: Pull Docker Image
-        run: docker pull grafana/grafana-image-renderer:master-9e1292b
+        run: docker pull ethan42/camelot:latest
 
       - name: Docker Scout
         uses: docker/scout-action@v1
         with:
           command: cves,recommendations,compare,sbom
-          image: grafana/grafana-image-renderer:master-9e1292b
+          image: ethan42/camelot:latest
           exit-code: false 
           sarif-file: sca_scout.sarif
           output: sbom_scout.spdx.json
